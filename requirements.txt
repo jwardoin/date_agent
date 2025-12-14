@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+jinja2
+langchain
+langchain-community
+langchain-text-splitters
+langgraph
+python-dotenv
+pandas
+openpyxl
+chromadb
