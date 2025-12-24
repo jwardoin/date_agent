@@ -6,13 +6,14 @@ from langchain_community.vectorstores import Chroma
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_core.runnables import RunnablePassthrough
 
+import os
 from dotenv import load_dotenv
 import pandas as pd
 
-env = load_dotenv()
+load_dotenv()
 
 import pandas as pd
-df = pd.read_csv("date-list.csv")
+df = pd.read_csv(os.getenv("CSV_FILE_PATH"))
 
 documents = []
 for _, row in df.iterrows():
@@ -35,7 +36,7 @@ retriever = vector_store.as_retriever(
 prompt = ChatPromptTemplate.from_messages([("system", SYSTEM_MESSAGE), 
                                            ("human", "Context:\n{context}\n\nQuestion: {question}")])
 
-llm = OllamaLLM(model="tinyllama", temperature=0.1)
+llm = OllamaLLM(model=os.getenv("OLLAMA_MODEL"), temperature=0.1)
 rag_chain = (
     {
         "context": retriever,
